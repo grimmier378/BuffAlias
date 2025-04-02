@@ -17,3 +17,7 @@ will setup the kei alias and if someone sends your enchanter `/tell enchanter bu
 we will find the spell for the alias and have the enchanter `/buffthem requester spellname`
 
 save file: all aliases are saved in `mq\config\myui\buffalias\buffnames.lua`
+
+Users can ask you for a list of aliases and you will reply only with the ones for spells in your spell book.
+
+`/tell buffer list`

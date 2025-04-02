@@ -136,10 +136,24 @@ local function Init()
 end
 
 local function OnEvent(line, whoAsked, whatSpell)
-	-- Called when the event is triggered
-	-- line = the line that triggered the event
-	-- whoAsked = the name of the person who asked for the buff
-	-- whatSpell = the name of the spell to cast
+	if whatSpell == nil then
+		if Module.Utils.PrintOutput then
+			Module.Utils.PrintOutput('MyUI', true, "\aw[\at%s\ax] \a-w[%s\aw] \a-gasked for \a-w[Buff List\aw]", Module.Name, whoAsked)
+		else
+			printf("\aw[\at%s\ax] \a-w[%s\aw] \a-gasked for \a-w[Buff List\aw]", Module.Name, whoAsked)
+		end
+		local replyString = string.format("/tell %s ", whoAsked)
+		local aliasList = ""
+		for alias, spellname in pairs(Module.Settings) do
+			if alias ~= nil then
+				if mq.TLO.Me.Book(spellname)() ~= nil then
+					aliasList = string.format("%s [%s = %s]", aliasList, alias, spellname)
+				end
+			end
+		end
+
+		mq.cmdf("%s %s", replyString, aliasList)
+	end
 
 	if Module.Settings[whatSpell] == nil then return end
 	printf("\aw[\at%s\ax] \a-w[%s\aw] \a-gasked for \a-w[%s\aw]", Module.Name, whoAsked, whatSpell)
@@ -149,6 +163,7 @@ end
 function Module.BuildEvents()
 	-- build the events for the module here
 	mq.event('buffme', "#1# tells you, 'buffme #2#'#*#", OnEvent)
+	mq.event("whatbuffs", "#1# tells you, 'list'#*#", OnEvent)
 end
 
 -- Exposed Functions
@@ -204,6 +219,7 @@ end
 
 function Module.Unload()
 	mq.unevent('buffme')
+	mq.unevent('whatbuffs')
 	mq.unbind("/buffalias")
 end
 
