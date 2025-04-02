@@ -21,3 +21,5 @@ save file: all aliases are saved in `mq\config\myui\buffalias\buffnames.lua`
 Users can ask you for a list of aliases and you will reply only with the ones for spells in your spell book.
 
 `/tell buffer list`
+
+https://www.youtube.com/watch?v=5_HTNoocGcA
